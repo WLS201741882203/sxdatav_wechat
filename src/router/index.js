@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import login from '../views/login/login.vue'
 import index from '../views/login/index.vue'
 
 Vue.use(Router)
@@ -11,8 +12,14 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'login',
+      //redirect: '/index', // 登录加载mainview
+      component: login,
+    },
+    {
+      path: '/',
       name: 'index',
-      redirect: '/home', // 登录加载mainview
+      redirect: '/home',
       component: index,
       children: [
         {
@@ -140,6 +147,13 @@ export default new Router({
       name: 'comment',
       component: () =>
         import('@/components/Infopanel/comment')
+    },
+    {
+      path: '/mine',
+      name: 'login',
+      component: () => {
+        import('@/views/login/login')
+      }
     }
   ]
 })

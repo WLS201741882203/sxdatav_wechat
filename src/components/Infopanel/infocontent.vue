@@ -14,36 +14,32 @@
       <cell>
         <span slot="title" class="cell-comment-title">评论</span>
       </cell>
-      <cell align-items="flex-start"  value-align="left" v-for="(comment,index) in commentslist" :key="index" >
-        <img slot="title" :src="comment.headimg" width="25" height="25" style="margin-right:1em;border-radius: 6px;margin-top: 0.5em;">
+      <cell align-items="flex-start"  value-align="left"  v-for="(comment,index) in commentslist" :key="index">
+        <!-- <img :src="comment.heading" width="25" height="25" style="margin-right:1em;border:2px solid #212121;margin-top:0.5em"> -->
         <div>
           <div class="comment-box-header">
             <div>
-              <span class="comment-name">{{comment.uname}} </span> <!--发表说说的用户昵称 -->
-              <p class="comment-time">{{comment.cdate}} </p>
+              <span style="color:#094dcc;font-weight:bold" class="comment-name">{{comment.uname}}:</span>
+              <p class="comment-time">{{comment.cdate}}</p>
             </div>
             <div>
-              <!-- 点赞 -->
-              <!-- 避免v-if和v-for同时在一个标签中使用的冲突，使用ul和li标签 -->
-              <ul v-if="show" >
-            <i class="fa fa-heart-o fa-5x animated swing" style="font-size:15px;"  v-for="(comment,index) in comment" :key="index" @click="colour(index)">{{comment.good}}</i>
-             </ul>
-             <ul v-if="!show">
-             <i class="fa fa-heart fa-5x animated swing" :class="fontclass" style="font-size:15px;" v-for="(comment,index) in comment" :key="index" @click="colour(index)" >{{comment.good}}</i>
-            </ul>
-            <!-- 评论别人的评论 -->
-            <i class="fa fa-comment-o" style="font-size:15px;color: #999999;margin-left:5px" @click="onFocus()" ></i>
+              <ul v-if="show">
+                <i class="fa fa-heart-o fa-5x animated swing" style="font-size:15px;" @click="colour(index)">{{comment.good}}</i>
+              </ul>
+              <ul v-if="!show">
+                <i class="fa fa-heart fa-5x animated swing" style="font-size:15px;" :class="fontclass" @click="colour(index)">{{comment.good}}</i>
+              </ul>
+                <i class="fa fa-comment-o" style="font-size:15px;color:#999999;margin-left:5px" @click="onFoucs()"></i>
             </div>
           </div>
-          <div class="comment-content" v-html="ccontentemoji(comment.ccontent)"> </div> <!--说说的内容 -->
-          <div class="recomment-content" v-if="comment.recomment !=null && comment.recomment.length >0 " ><!--评论回复 -->
+            <div class="comment-content" v-html="ccontentemoji(comment.ccontent)"></div>
+            <div class="recomment-content" v-if="comment.recomment!=null&&comment.recomment.length>0">
               <div v-for="(recomment,index) in comment.recomment" :key="index">
-                <span >{{recomment.uname}}等人 </span> 
-                <span style="color: #094dcc" >共{{comment.recomment.length}}条回复 </span>
-                <!-- <span class="right-arrow">
-                  <span class="arrow"> </span>
-                </span> --><br>
-                <span style="color: #094dcc">{{recomment.uname}}:
+                <div>
+                  <span>{{recomment.uname}}等人</span>
+                  <span style="color:#094dcc;">共{{comment.recomment.length}}条回复</span><br>
+                </div>
+                <span style="color:#094dcc;">{{recomment.uname}}:
                   <span style="color:#212121;">回复测试</span>
                 </span>
               </div>
@@ -186,6 +182,7 @@ export default {
         }
         // post需加入qs将json格式直接转化为data所需的格式（?pcid=11&ccontent=测试）
         this.axios.post('http://110.53.162.165:5050/api/comment/insertInfoCM',this.qs.stringify(comment) ).then((res) => {
+          console.log(res.data)
           this.showComtoasttext = '发布成功'
           this.showtoast = true
           this.commentText = ''
@@ -253,6 +250,12 @@ export default {
 .com_bottom .useful.usefulClick {
     color: #F32D27;
     border: 1px solid #F32D27;
+}
+.comment-content{
+  margin: 1px 4px;
+}
+.recomment-content{
+  margin: 1px 10px;
 }
 .hover {
   color: #ee3f4d;

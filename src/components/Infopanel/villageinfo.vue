@@ -22,36 +22,12 @@
 
 import { Swiper, XHeader } from 'vux' // 导入组件
 
-const baseList = [{
-  url: 'javascript:',
-  img: require('../../assets/img/village/one.jpg'),
-  title: '茶坑'
-}, {
-  url: 'javascript:',
-  img: require('../../assets/img/village/two.jpg'),
-  title: '梁启超故居'
-}, {
-  url: 'javascript:',
-  img: require('../../assets/img/village/three.jpg'),
-  title: '梁启超纪念馆',
-  fallbackImg: '../../assets/img/village/one.jpg'
-}]
-const urlList = baseList.map((item, index) => ({
-  url: '/home_tourism',
-  // 转向农家乐旅游信息
-  img: item.img,
-  fallbackImg: item.fallbackImg,
-  title: `${item.title}`
-}))
 
 export default {
     name: 'villageinfo', //美丽乡村详情
     components: { Swiper, XHeader }, // 注册组件
     data () {
         return {
-            village_list: urlList,
-            village_index: 0,
-            swiperItemIndex: 1,
             title: ''
         }
     },
@@ -60,12 +36,6 @@ export default {
 
     },
     methods: {
-        onSwiperItemIndexChange (index) {
-        console.log('demo item change', index)
-        },
-        village_onIndexChange (index) {
-        this.village_index = index
-        }
     },
     mounted () {
     }

@@ -40,14 +40,14 @@
           <i slot="icon" class="fa fa-pencil fa-fw"></i>
         </cell>
       </div>
-      <div>
+      <!-- <div>
         <cell title="账号换绑"  @click.native="showAlert = true" is-link>
           <i slot="icon" class="fa fa-phone-square menu-cell-icon"></i>
         </cell>
-      </div>
+      </div> -->
     </group>
     <group>
-      <cell title="退出" is-link>
+      <cell title="退出" @click.native="showAlert = true" is-link>
         <i slot="icon" class="fa fa-power-off menu-cell-icon"></i>
       </cell>
     </group>
@@ -55,9 +55,9 @@
     <mynews :show1="show1" v-on:closepop1="show1 =$event"/>
     <complaint :show2="show2" :title="'投诉建议'" v-on:closepop2="show2 =$event"/>
     <!-- 解绑确认 -->
-    <actionsheet v-model="showAlert" :menus="menus3" @on-click-menu="onDelete" show-cancel></actionsheet>
+    <actionsheet v-model="showAlert" :menus="menus3" @on-click-menu="loginOut"></actionsheet>
     <!-- 解绑成功后的提示 -->
-    <toast v-model="showSuccess">{{'解绑成功'}}</toast>
+    <toast v-model="showSuccess">{{'退出成功'}}</toast>
 
   </div>
 </template>
@@ -67,6 +67,7 @@ import mynews from '../../components/mine/mynews.vue'
 import complaint from '../../components/mine/complaint.vue'
 import { Card, Cell, Grid, GridItem, Group, Actionsheet, Toast } from 'vux'
 export default {
+  name: 'mine',
   components: { Card, Cell, Grid, GridItem, Group, myinfo, mynews, complaint, Actionsheet, Toast },
   data () {
     return {
@@ -82,13 +83,14 @@ export default {
       showAlert: false,
       showSuccess: false,
       menus3: [
-        '确定解绑吗?<br/><span style="color:#919191;font-size:12px;">解绑后后无法正常使用系统了</span>','<span style="color:red;">确认解绑</span>'
+        '确定退出吗?<br/><span style="color:#919191;font-size:14px;">退出后后无法正常使用系统了</span>','<span style="color:red;">确认退出</span><br><span style="color:red;font-size:12px">(不退出可点空白处取消操作)</sapn>'
       ]
     }
   },
   methods: {
-    onDelete () {
+    loginOut () {
       this.showSuccess = true
+      this.$router.replace('/')
     },
     showinfo (item) {
       this.show = true
@@ -101,7 +103,10 @@ export default {
     showComp (item) {
       this.show2 = true
       console.log(item)
-    }
+    },
+    // loginout (item) {
+    //   this.$router.push('/loginout')
+    // }
   }
 }
 </script>

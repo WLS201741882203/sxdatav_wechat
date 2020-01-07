@@ -4,6 +4,7 @@
       <div v-transfer-dom>
         <popup v-model="showCulActiv" position="right" width="100%">
           <x-header :left-options="{preventGoBack: true}" @on-click-back="backpage">文化活动</x-header>
+          <!-- 循环模式 loop auto-->
           <div>
             <img style="width:100%;height:150px;" :src="img" alt="">
             <panel type="5" :list="list" @on-click-item="openproject"></panel>
@@ -13,7 +14,7 @@
       <div v-transfer-dom>
         <popup v-model="show" position="right" width="100%">
           <div>
-            <x-header class="vux-scroller-header" :list="list" :left-options="{preventGoBack: true}" @on-click-back="backpageculAct">{{list.mtitle}}</x-header>
+            <x-header class="vux-scroller-header" :list="list" :left-options="{preventGoBack: true}" @on-click-back="backpageDor">{{list.mtitle}}</x-header>
             <div>
               <villageinfo :villageinfo="contentvil"/>
             </div>
@@ -49,29 +50,30 @@ export default {
   methods: { // 方法函数
     backpage () { // 关闭弹窗
       this.showCulActiv = false
+      this.$emit('closeculActiv',false)
     },
     openproject (item) { // 显示弹窗
       this.show = true
       this.contentvil = item // 打开popup时使单个panel中存储的值赋给contentvil
       console.log(item)
     },
-    backpageculAct () { // 关闭详情弹窗
+    backpageDor () { // 关闭详情弹窗
       this.show = false
     },
       getvilinfo:function () { // 数据请求函数
-      this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:2,pageIndex:1,pageSize:20 } }).then((res) => {
+      this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{ params: { vtype: 2, pageIndex: 1, pageSize: 20 } }).then((res) => {
         this.list = [] // 置空初始化
-        //  console.log(res.data)
+        // console.log(res.data)
           for (let i = 1, len = res.data.data.length; i < len; i++) {
            this.list.push({
-            villageinfo: res.data.data[i],
+             villageinfo: res.data.data[i],
             title: res.data.data[i].mtitle,
             src: res.data.data[i].mpic,
             content: res.data.data[i].mcontent,
             readtotal: res.data.data[i].greadtotal,
             meta: {
               other: res.data.data[i].uname,
-              date: res.data.data[i].pushdate,
+              date: res.data.data[i].pushdate
             }
            })
          } // 请求成功函数
@@ -80,7 +82,7 @@ export default {
       })
     },
      getImginfo:function () { // 数据请求函数
-      this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:2,pageIndex:1,pageSize:20 } }).then((res) => {
+    this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{ params: {vtype: 2, pageIndex: 1, pageSize: 20 } }).then((res) => {
         this.village_list = [] // 置空初始化
         // console.log(res.data)
           for (let i = 0, len = res.data.data.length; i < len; i++) {

@@ -49,6 +49,7 @@ export default {
   methods: { // 方法函数
     backpage () { // 关闭弹窗
       this.showvil = false
+      this.$emit('closevilPlan',false)
     },
     openproject (item) { // 显示弹窗
       this.show = true

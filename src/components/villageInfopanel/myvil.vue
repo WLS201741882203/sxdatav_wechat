@@ -49,6 +49,7 @@ export default {
   methods: { // 方法函数
     backpage () { // 关闭弹窗
       this.showMyvil = false
+      this.$emit('closeMyvil',false)
     },
     onSwiperItemIndexChange (index) {
       console.log('demo item change', index)
@@ -65,7 +66,7 @@ export default {
       this.show = false
     },
       getvilinfo:function () { // 数据请求函数
-      this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:1,pageIndex:1,pageSize:20 } }).then((res) => {
+      this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{ params: {vtype: 1, pageIndex: 1, pageSize: 20 } }).then((res) => {
         this.list = [] // 置空初始化
         console.log(res.data)
           for (let i = 1, len = res.data.data.length; i < len; i++) {
@@ -87,7 +88,7 @@ export default {
     },
     getImginfo:function () { // 数据请求函数
       this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:1,pageIndex:1,pageSize:20 } }).then((res) => {
-        this.village_list = [] // 置空初始化
+      this.village_list = [] // 置空初始化
         // console.log(res.data)
           for (let i = 0, len = res.data.data.length; i < len; i++) {
             this.img = res.data.data[i].mpic
